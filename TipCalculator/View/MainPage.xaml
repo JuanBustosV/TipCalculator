@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:TipCalculator.Converters" xmlns:tipcalculator="clr-namespace:TipCalculator.ViewModel" x:DataType="tipcalculator:MaingPageViewModel"
+             x:Class="TipCalculator.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DecimalToMoney x:Key="ToMoney"></converters:DecimalToMoney>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <TableView Intent="Form">
+        <TableSection Title="Datos">
+            
+            <EntryCell x:Name="txtTotal"
+                       Label="Total"
+                       Placeholder="0.0€"
+                       Text="{Binding tipModel.Total}"
+                       Keyboard="Numeric"/>
+            
+            <EntryCell x:Name="txtPropina"
+                       Label="Propina (%)"
+                       Text="{Binding tipModel.Propina}"
+                       Keyboard="Numeric"/>
+            
+            <EntryCell x:Name="txtNoPersonas"
+                       Label="Nº de personas"
+                       Text="{Binding tipModel.NoPersonas}"
+                       Keyboard="Numeric"
+                       PropertyChanged="txtNoPersonas_PropertyChanged"/>
+            
+        </TableSection>
+        <TableSection>
+            <ViewCell>
+                <ViewCell.View>
+                    <StackLayout>
+                        <!--<Button x:Name="btnCalcular"
+                                Text="¡Calcular!"
+                                Clicked="btnCalcular_Clicked"></Button>-->
+                        <Button x:Name="btnCalcular"
+                                Text="¡Calcular!"                                
+                                Command="{Binding OperationsCommand}"></Button>
+                    </StackLayout>
+                </ViewCell.View>
+            </ViewCell>
+        </TableSection>
+        <TableSection Title="Resultado">
+            <!--<TextCell x:Name="lblPropina"
+                      Text="Propina: "
+                      Detail="0,00 €"/>
+            <TextCell x:Name="lblTotal"
+                      Text="Total: "
+                      Detail="0,00 €"/>
+            <TextCell x:Name="lblPropinaPorPersona"
+                      Text="Propina por persona: "
+                      Detail="0,00 €"/>
+            <TextCell x:Name="lblTotalPorPersona"
+                      Text="Total por persona: "
+                      Detail="0,00 €"/>-->
+            <TextCell x:Name="lblPropina"
+                      Text="Propina: "
+                      Detail="{Binding tipModel.TotalPropina, Converter={StaticResource ToMoney}}"/>
+            
+            <TextCell x:Name="lblTotal"
+                      Text="Total: "
+                      Detail="{Binding tipModel.TotalConPropina, Converter={StaticResource ToMoney}}"/>
+            
+            <TextCell x:Name="lblPropinaPorPersona"
+                      Text="Propina por persona: "
+                      Detail="{Binding tipModel.PropinaPorPersona, Converter={StaticResource ToMoney}}"/>
+            
+            <TextCell x:Name="lblTotalPorPersona"
+                      Text="Total por persona: "
+                      Detail="{Binding tipModel.TotalPorPersona, Converter={StaticResource ToMoney}}"/>
+        </TableSection>
+    </TableView>
+
+</ContentPage>
